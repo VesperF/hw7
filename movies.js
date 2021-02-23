@@ -12,7 +12,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
     // loop through all movies
     for (let i = 0; i < movies.length; i++) {
       let movie = movies[i]
-      let docRef = await db.collection('watched').doc(`${movie.id}`).get()
+      let docRef = await db.collection('watched').doc(`${movie.id}-${user.uid}`).get()
       let watchedMovie = docRef.data()
       let opacityClass = ''
       if (watchedMovie) {
@@ -30,7 +30,7 @@ firebase.auth().onAuthStateChanged(async function (user) {
         event.preventDefault()
         let movieElement = document.querySelector(`.movie-${movie.id}`)
         movieElement.classList.add('opacity-20')
-        await db.collection('watched').doc(`${movie.Id}-${user.uid}`).set({})
+        await db.collection('watched').doc(`${movie.id}-${user.uid}`).set({})
       })
     }  // end of for loop
 
